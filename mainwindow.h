@@ -36,6 +36,7 @@ private slots:
     void on_bnGraficar_clicked();
 
     void on_bnBuscarVoltaje_clicked();
+    void ShowFilesQLine(QString nombre);
 
 private:
     Ui::MainWindow *ui;
@@ -43,15 +44,6 @@ private:
     QUdpSocket *mSocket;
     grafica *wGrafica;
 
-};
-
-class MiHilo : public MainWindow{
-    Q_OBJECT
-
-public:
-    void correr(QString nombre);
-private:
-    Ui::MainWindow *ui;
 };
 
 #endif // MAINWINDOW_H

@@ -43,11 +43,10 @@ MainWindow::MainWindow(QWidget *parent) :
     escritorXml.writeEndDocument();
 
     xml.close();
-    MiHilo hilo1;
-    hilo1.correr("miXml.xml");
 
+    ShowFilesQLine("miXml.xml");
 }
-void MiHilo::correr(QString nombre){
+void MainWindow::ShowFilesQLine(QString nombre){
     QFile salida(nombre);
     salida.open(QIODevice::ReadOnly);
     QTextStream leer(&salida);
@@ -89,38 +88,11 @@ void MainWindow::on_bnEnviar_clicked()
 {
     auto datagrama = ui->plainTextEdit->toPlainText().toLatin1();
     mSocket->writeDatagram(datagrama,QHostAddress::LocalHost,ui->puerto->value());
-
 }
 
 void MainWindow::on_bnGraficar_clicked()
 {
-    QVector<float> *vVoltaje;
-    QVector<float> *vTiempo;
-
-    vVoltaje = new QVector<float>();
-    vTiempo = new QVector<float>();
-
-    QFile xml("miXml.xml");
-    xml.open(QIODevice::ReadOnly);
-    xmlTemporal = new QDomDocument();
-    xmlTemporal->setContent(&xml);
-    xml.close();
-
-    QDomElement root = xmlTemporal->documentElement();
-    QDomElement Mediciones = root.firstChild().toElement();
-    while(!Mediciones.isNull()){
-        if(Mediciones.tagName() == "Medicion"){
-            QDomElement medicion = Mediciones.firstChild().toElement();
-            while(!medicion.isNull()){
-                    vVoltaje->append(medicion.attribute("Voltaje","ErrorVoltaje").toFloat());
-                    vTiempo->append(medicion.attribute("Tiempo","ErrorTiempo").toFloat());
-                    medicion = medicion.nextSibling().toElement();
-            }
-        }
-        Mediciones = Mediciones.nextSibling().toElement();
-    }
-
-    wGrafica = new grafica(NULL,"Tiempo","Voltaje",vVoltaje,vTiempo);
+    wGrafica = new grafica(NULL,"miXml.xml","Tiempo","Voltaje");
     wGrafica->show();
 }
 
