@@ -17,13 +17,14 @@ class grafica : public QWidget
     Q_OBJECT
 
 public:
-    explicit grafica(QWidget *parent = 0, const QString archivo = "Res.xml",QString ejeX = "x", QString ejeY = "y");
+    explicit grafica(QWidget *parent = 0, const QString archivo = "Res.xml", QString ejeX = "x", QString ejeY = "y");
     ~grafica();
 
 private:
     Ui::grafica *ui;
     QDomDocument *xmlTemporal;
-    QFileSystemWatcher * watcher;
+    //QFileSystemWatcher temporal;
+   // QFileSystemWatcher * watcher;
 private slots:
     void GraficarArchivo(const QString& archivo);
 };

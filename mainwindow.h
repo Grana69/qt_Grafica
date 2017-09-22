@@ -8,6 +8,8 @@
 #include <QtXml/QDomElement>
 #include "grafica.h"
 #include <QVector>
+#include <QFileSystemWatcher>
+
 
 
 namespace Ui {
@@ -43,6 +45,8 @@ private:
     QDomDocument *xmlTemporal;
     QUdpSocket *mSocket;
     grafica *wGrafica;
+    QFileSystemWatcher *watcher;
+
 
 };
 

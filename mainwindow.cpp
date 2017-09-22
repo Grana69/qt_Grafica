@@ -7,9 +7,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    QString Archivo = "miXml.xml";
     mSocket = new QUdpSocket(this);
     ui->setupUi(this);
-    QFile xml("miXml.xml");
+    QFile xml(Archivo);
     xml.open(QIODevice::WriteOnly);
     QXmlStreamWriter escritorXml(&xml);
     escritorXml.setAutoFormatting(true);
@@ -44,7 +45,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     xml.close();
 
-    ShowFilesQLine("miXml.xml");
+    ShowFilesQLine(Archivo);
+    watcher = new QFileSystemWatcher();
+    watcher->addPath(Archivo);
+    wGrafica = new grafica(NULL,Archivo,"Tiempo","Voltaje");
+    wGrafica->show();
+    connect(watcher,SIGNAL(fileChanged(QString)),wGrafica,SLOT(GraficarArchivo(QString)));
+
 }
 void MainWindow::ShowFilesQLine(QString nombre){
     QFile salida(nombre);
@@ -92,8 +99,7 @@ void MainWindow::on_bnEnviar_clicked()
 
 void MainWindow::on_bnGraficar_clicked()
 {
-    wGrafica = new grafica(NULL,"miXml.xml","Tiempo","Voltaje");
-    wGrafica->show();
+
 }
 
 void MainWindow::on_bnBuscarVoltaje_clicked()

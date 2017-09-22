@@ -11,9 +11,6 @@ grafica::grafica(QWidget *parent,const QString archivo,QString ejeX, QString eje
     ui->widget->xAxis->setLabel(ejeX);
     ui->widget->yAxis->setLabel(ejeY);
     GraficarArchivo(archivo);
-    watcher = new QFileSystemWatcher(this);
-    watcher->addPath(archivo);
-    connect(watcher,SIGNAL(fileChanged(QString)),this,SLOT(GraficarArchivo(QString)));
 }
 
 void grafica::GraficarArchivo(const QString& archivo){
