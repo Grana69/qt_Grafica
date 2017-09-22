@@ -23,9 +23,7 @@ public:
 private:
     Ui::grafica *ui;
     QDomDocument *xmlTemporal;
-    //QFileSystemWatcher temporal;
-   // QFileSystemWatcher * watcher;
-private slots:
+public slots:
     void GraficarArchivo(const QString& archivo);
 };
 

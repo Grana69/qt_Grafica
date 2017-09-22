@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    QString Archivo = "miXml.xml";
+    Archivo = "miXml.xml";
     mSocket = new QUdpSocket(this);
     ui->setupUi(this);
     QFile xml(Archivo);
@@ -50,9 +50,20 @@ MainWindow::MainWindow(QWidget *parent) :
     watcher->addPath(Archivo);
     wGrafica = new grafica(NULL,Archivo,"Tiempo","Voltaje");
     wGrafica->show();
-    connect(watcher,SIGNAL(fileChanged(QString)),wGrafica,SLOT(GraficarArchivo(QString)));
-
+    Infinito4Ever();
+    //connect(watcher,SIGNAL(fileChanged(QString)),wGrafica,SLOT(GraficarArchivo(QString)));
+    //connect(watcher,&QFileSystemWatcher::fileChanged,wGrafica,&grafica::GraficarArchivo);
 }
+void MainWindow::Infinito4Ever(){
+    connect(watcher,&QFileSystemWatcher::fileChanged,[this](const QString archivo){
+        contador++;
+        qDebug() << "lambda, archivo modificado: "+archivo+" Modificado:"+contador+" veces"  << endl;
+        wGrafica->GraficarArchivo(archivo);
+        this->Infinito4Ever();
+    });
+    return;
+}
+
 void MainWindow::ShowFilesQLine(QString nombre){
     QFile salida(nombre);
     salida.open(QIODevice::ReadOnly);

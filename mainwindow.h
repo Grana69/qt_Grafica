@@ -40,12 +40,16 @@ private slots:
     void on_bnBuscarVoltaje_clicked();
     void ShowFilesQLine(QString nombre);
 
+    void Infinito4Ever();
+
 private:
     Ui::MainWindow *ui;
     QDomDocument *xmlTemporal;
     QUdpSocket *mSocket;
     grafica *wGrafica;
     QFileSystemWatcher *watcher;
+    QString Archivo;
+    int contador = 0 ;
 
 
 };
